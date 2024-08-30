@@ -20,8 +20,10 @@ class OrderController extends Controller
 
    public function addToCart($pId)
    {
-
     $parts=Part::find($pId);
+    if($parts->stock > 0)
+    {
+    
     $myCart=session()->get('basket');
 
      //step 1: cart empty
@@ -49,6 +51,8 @@ class OrderController extends Controller
          {// dd($myCart[$pId]);
                 //step 2: quantity update, subtotal update
                //q=1,sub=50
+               if($parts->stock > $myCart[$pId]['quantity'])
+               {
                $myCart[$pId]['quantity'] = $myCart[$pId]['quantity'] + 1;
                $myCart[$pId]['subtotal'] = $myCart[$pId]['quantity'] * $myCart[$pId]['price'];
 
@@ -56,6 +60,11 @@ class OrderController extends Controller
 
                notify()->success('Quantity updated.');
                return redirect()->back();
+            }else{
+                notify()->error('Quantity not available.');
+                return redirect()->back();
+               }
+
          }
          else{
         //step 3: add to cart
@@ -76,7 +85,11 @@ class OrderController extends Controller
     }
 
     }
+    }else{
+        notify()->error('Stock not available.');
+        return redirect()->back();
     }
+}
     public function viewCart()
     {
 
@@ -236,4 +249,27 @@ class OrderController extends Controller
 
 
     }
+    public function updateCart(Request $request, $id)
+    {
+        $cart = session()->get('basket');
+        $parts = Part::find($id);
+    
+        if ($request->quantity > 0) {
+            if ($parts->stock >= $request->quantity) {
+                $cart[$id]['quantity'] = $request->quantity;
+                $cart[$id]['subtotal'] = $request->quantity * $cart[$id]['price'];
+    
+                session()->put('basket', $cart);
+                notify()->success('Cart updated.');
+                return redirect()->back();
+            } else {
+                notify()->error('Stock not available');
+                return redirect()->back();
+            }
+        } else {
+            notify()->error('Quantity must be greater than zero');
+            return redirect()->back();
+        }
+    }
+
 }

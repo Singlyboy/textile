@@ -34,6 +34,7 @@ Route::get('/show-parts/{partsId}',[FrontendPartsController::class,'showParts'])
 //add cart
 Route::get('/add-to-cart/{partsId}',[OrderController::class, 'addToCart'])->name('add.to.cart');
 Route::get('/view-cart',[OrderController::class, 'viewCart'])->name('view.cart');
+Route::post('/update-cart/{partsid}',[OrderController::class,'updateCart'])->name('update.cart');
 Route::get('/clear-cart',[OrderController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/item/delete/{id}',[OrderController::class, 'cartItemDelete'])->name('cart.item.delete');
 Route::get('/search',[FrontendPartsController::class,'search'])->name('search');
