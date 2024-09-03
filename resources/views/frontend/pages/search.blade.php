@@ -10,47 +10,39 @@
     {{ $parts->count() }} items found for "{{ request()->search_key }}"
 </p>
 
+@foreach ($parts as $par )
 
-    @foreach ($parts as $par )
-        
-    <a href="{{route('show.parts',$par->id)}}">
-      <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">       
-         <div class="card text-black">
-          <img style="width: 150px;" src="{{url('/upload/upload/'.$par->image)}}"
-            class="card-img-top" alt="iPhone" width="50px" />
-          <div class="card-body">
-            <div class="text-center mt-1">
-              <h4 class="card-title">{{$par->name}}</h4>
-                </div>
-
-            <div class="text-center">
-              <div class="p-3 mx-n3 mb-4" style="background-color: #eff1f2;">
-                <h5 class="mb-0">{{$par->category->name}}</h5>
-              </div>
-              <div class="d-flex flex-column mb-4 lead">
-                <span class="mb-2">{{$par->price}} BDT</span>
-                
-                <span style="color: transparent;">0</span>
-              </div>
-
-              
-            </div>
-
-            <div class="d-flex flex-row">
-              <a href="{{route('add.to.cart',$par->id)}}" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary flex-fill me-1" data-mdb-ripple-color="dark">
-              Add to cart
-              </a>
-              </button>
-              <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger flex-fill ms-1">Buy now</button>
-            </div>
-          </div>
+                                    
+<div class="col-md-6 col-lg-4 col-xl-3">
+<a href="{{route('show.parts',$par->id)}}">
+    <div class="rounded position-relative fruite-item">
+        <div class="fruite-img">
+            <img style="width:250px;" src="{{url('/upload/upload/'.$par->image)}}" class="img-fluid rounded-top" alt="">
         </div>
-      </div>
-      </a>
-      @endforeach
-    
+        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{$par->category->name}}</div>
+        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+            <h4>{{$par->name}}</h4>
+            <p>Stock : {{$par->stock >0 ?  $par->stock : 'out of stock'}}</p>
+            <div class="d-flex justify-content-between flex-lg-wrap">
+                <p class="text-dark fs-5 fw-bold mb-0">{{$par->price}} BDT</p>
+
+                @if ($par->stock > 0)
+                <a href="{{route('add.to.cart',$par->id)}}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                @else
+                <a disabled href="{{route('add.to.cart',$par->id)}}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                @endif
+
+            </div>
+        </div>
     </div>
-  </div>
+    </a>
+</div>
+
+@endforeach
+</div>
+</div>
+</div>
+</div>
 </section>
 
 @endsection

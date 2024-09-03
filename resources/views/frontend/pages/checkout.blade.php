@@ -1,87 +1,111 @@
 @extends('frontend.master')
 
 @section('content')
-
-<div class="container">
-  <div class="py-5 text-center">
-  <h2>Checkout form</h2>
-  </div>
-
-  <hr>
-  <div class="row">
-    <div class="col-md-4 order-md-2 mb-4">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-muted">Your cart</span>
-        <span class="badge badge-secondary badge-pill">3</span>
-      </h4>
-      @foreach ($myCart as $chackData)
-
-      <ul class="list-group mb-3">
-        <li class="list-group-item d-flex justify-content-between lh-condensed">
-          <div>
-            <h6 class="my-0">{{ $chackData['parts_name'] }}</h6>
-          
-          </div>
-          <span class="text-muted">Price:{{ $chackData['subtotal'] }}</span>
-        </li>
-       @endforeach
-        <li class="list-group-item d-flex justify-content-between">
-          <span>Total (BDT)</span>
-          <strong>
-          {{ session()->has('basket')  ? array_sum(array_column(session()->get('basket'),'subtotal')):0}}
-          </strong>
-        </li>
-      </ul>
-
-        </div>
-    <form action="{{route('order.place')}}" method="post">
-    @csrf
-
-    <div class="col-md-8 order-md-1">
-      <h4 class="mb-3">Billing address</h4>
-      <form class="needs-validation" novalidate>
-        <div class="row">
-
-          <div class="col-md-6 mb-3">
-            <label for="firstName">Receiver name</label>
-            <input name="receiver_name" type="text" class="form-control" id="" placeholder="" value="" required>
+<div class="container-fluid py-5">
+            <div class="container py-5">
+                <h1 class="mb-4">Billing details</h1>
+                <form action="{{route('order.place')}}" method="post">
+                @csrf
+                    <div class="row g-5">
+                        <div class="col-md-12 col-lg-6 col-xl-7">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="form-item w-100">
+                                        <label class="form-label my-3">Receiver name<sup>*</sup></label>
+                                        <input name="receiver_name" requiredtype="text" class="form-control">
+                                    </div>
+                                </div>
+                             
+                            </div>
+                          
+                            <div class="form-item">
+                                <label class="form-label my-3">Address <sup>*</sup></label>
+                                <input name="address" required type="text" class="form-control" placeholder="House Number Street Name">
+                            </div>
+                           
+                            
+                           
+                            <div class="form-item">
+                                <label class="form-label my-3">Mobile<sup>*</sup></label>
+                                <input name="receiver_mobile" required type="tel" class="form-control">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label my-3">Email Address<sup>*</sup></label>
+                                <input name="email" required type="email" class="form-control">
+                            </div>
+                          
+                        </div>
+                        <div class="col-md-12 col-lg-6 col-xl-5">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Products</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($myCart as $chackData)
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="d-flex align-items-center mt-2">
+                                                    <img src="{{url('/upload/upload/'.$chackData['image'])}}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                </div>
+                                            </th>
+                                            <td class="py-5">{{ $chackData['parts_name'] }}</td>
+                                            <td class="py-5">{{ $chackData['price'] }}</td>
+                                            <td class="py-5">{{ $chackData['quantity'] }}</td>
+                                            <td class="py-5"> {{ $chackData['subtotal'] }}</td>
+                                        </tr>
+                                        @endforeach
+                                      
+                                       
+                                        <tr>
+                                            <th scope="row">
+                                            </th>
+                                            <td class="py-5">
+                                                <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
+                                            </td>
+                                            <td class="py-5"></td>
+                                            <td class="py-5"></td>
+                                            <td class="py-5">
+                                                <div class="py-3 border-bottom border-top">
+                                                    <p class="mb-0 text-dark">{{ session()->has('basket')  ? array_sum(array_column(session()->get('basket'),'subtotal')):0}}</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                                <div class="col-12">
+                                    <div class="form-check text-start my-3">
+                                        <input type="radio"  name="paymentMethod" value="online" required class="form-check-input bg-primary border-0" id="Payments-1" name="Payments" value="Payments">
+                                        <label class="form-check-label" for="Payments-1">Check Payments</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                                <div class="col-12">
+                                    <div class="form-check text-start my-3">
+                                        <input type="radio" name="paymentMethod" value="cod" required class="form-check-input bg-primary border-0" id="Delivery-1" name="Delivery" value="Delivery">
+                                        <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                                <button class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" type="submit">Place Order</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-          
-        <div class="mb-3">
-          <label for="email">Email <span class="text-muted">(Optional)</span></label>
-          <input name="email" type="email" class="form-control" id="email" placeholder="you@example.com">
-          
-          </div>
-    
-
-        <div class="mb-3">
-          <label for="address">Address</label>
-          <input name="address" type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-          
-          </div>
-      
-
-      
-        <hr class="mb-4">
-
-        <h4 class="mb-3">Payment</h4>
-
-        <div class="d-block my-3">
-          <div class="custom-control custom-radio">
-            <input id="credit" name="paymentMethod" value="cod" type="radio" class="custom-control-input" checked required>
-            <label class="custom-control-label" for="credit">Cash on Delivery (COD)</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input id="debit" name="paymentMethod" value="online"  type="radio" class="custom-control-input" required>
-            <label class="custom-control-label" for="debit">Online Payment</label>
-          </div>
-          </div>
-        
-        <hr class="mb-4">
-        <button class="btn btn-primary btn-lg btn-block active" type="submit">Order Now</button>
-      </form>
-    </div>
-  </div>
+        </div>
 
 @endsection

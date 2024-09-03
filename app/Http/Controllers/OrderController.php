@@ -250,26 +250,26 @@ class OrderController extends Controller
 
     }
     public function updateCart(Request $request, $id)
-    {
-        $cart = session()->get('basket');
-        $parts = Part::find($id);
-    
-        if ($request->quantity > 0) {
-            if ($parts->stock >= $request->quantity) {
-                $cart[$id]['quantity'] = $request->quantity;
-                $cart[$id]['subtotal'] = $request->quantity * $cart[$id]['price'];
-    
-                session()->put('basket', $cart);
-                notify()->success('Cart updated.');
-                return redirect()->back();
-            } else {
-                notify()->error('Stock not available');
-                return redirect()->back();
-            }
-        } else {
-            notify()->error('Quantity must be greater than zero');
-            return redirect()->back();
-        }
+{
+    $cart = session()->get('basket');
+    $parts = Part::find($id);
+
+    // Ensure quantity is at least 1
+    $quantity = max(1, $request->quantity);
+
+    if ($parts->stock >= $quantity) {
+        $cart[$id]['quantity'] = $quantity;
+        $cart[$id]['subtotal'] = $quantity * $cart[$id]['price'];
+
+        session()->put('basket', $cart);
+        notify()->success('Cart updated.');
+    } else {
+        notify()->error('Stock not available');
     }
+
+    return redirect()->back();
+}
+
+    
 
 }

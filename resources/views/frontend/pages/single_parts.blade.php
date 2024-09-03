@@ -6,7 +6,7 @@
 <!-- single Parts view section -->
  <div class="row">
     
-<section class="py-5">
+<section class="py-5" style="margin-top:200px;">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-md-6">
@@ -15,14 +15,14 @@
            
                         <h1 class="display-5 fw-bolder">{{$singleParts->name}}</h1>
                         <div class="fs-5 mb-5">
-                            <span class="text-decoration-line-through">{{$singleParts->price}} .BDT</span>
+                            <span class="">{{$singleParts->price}} .BDT</span>
                             <p>Stock: {{$singleParts->stock}} </p>
                            
                         </div>
                         <p class="lead">description here</p>
                         <div class="d-flex">
                             <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem">
-                            <a class="btn btn-outline-dark flex-shrink-0" href="{{route('add.to.cart',$singleParts->id)}}">
+                            <a class="" href="{{route('add.to.cart',$singleParts->id)}}">
                                 <i class="bi-cart-fill me-1"></i>
                                 Add to cart
                             </button>
@@ -33,7 +33,7 @@
         </section>
 
 <!-- related Parts section -->
-        <section class="py-5 bg-light">
+        <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <h2 class="fw-bolder mb-4">Related Parts</h2>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
