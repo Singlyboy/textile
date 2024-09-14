@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class PartsController extends Controller
 {
     public function parts(){
-        $allParts = Part::with('category')->paginate(5);
+        $allParts = Part::with('category')->orderBy('id', 'desc')->paginate(10);
         return view('backend.parts', compact('allParts'));
 }
 public function form()
@@ -25,10 +25,12 @@ public function store(Request $request)
 {
     $validation=Validator::make($request->all(),
     [
+       
         'par_name'=>'required|unique:parts,name',
-        'par_image'=>'required',
+        'par_price'=>'required|numeric',
+         'par_image'=>'required',
         'category_id'=>'required',
-        'par_stock'=>'required'
+        'par_stock'=>'required|numeric'
     ]);
 
     if($validation->fails())
@@ -92,6 +94,7 @@ public function viewParts($id)
             'par_name'=>'required|min:2',
             'par_image'=>'required',
             'category_id'=>'required'
+            
         ]);
 
 
@@ -100,6 +103,7 @@ public function viewParts($id)
         $parts->update([
             'name'=>$request->par_name,
             'price'=>$request->par_price,
+            'stock'=>$request->par_stock,
         ]);
       
         notify()->success('Parts updated successfully.');
@@ -107,5 +111,12 @@ public function viewParts($id)
 
 
     }
+    public function setAlertStock(Request $request){
+       
+
+        session()->put('alert',$request->alert_qty);
+        return redirect()->back();
+    }
+
 
 }

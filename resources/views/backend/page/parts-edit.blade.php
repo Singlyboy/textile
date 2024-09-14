@@ -23,7 +23,11 @@
  
   <div class="form-group">
     <label for="name">Parts Price</label>
-    <input value="{{$parts->price}}" required name="par_price" type="text" class="form-control" id="p_price" placeholder="Enter product price">
+    <input value="{{$parts->price}}" required name="par_price" type="number" class="form-control" id="p_price" placeholder="Enter product price">
+  </div>
+  <div class="form-group">
+    <label for="name">Enter Product Stock:</label>
+    <input value="{{$parts->stock}}" required name="par_stock" type="number" class="form-control" id="" placeholder="Enter product stock">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   </form>

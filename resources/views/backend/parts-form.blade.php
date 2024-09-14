@@ -29,7 +29,7 @@
 
   <div class="form-group">
     <label for="name">Parts Price</label>
-    <textarea class="form-control" required name="par_price" id="" placeholder="Enter Prats price"></textarea>
+    <input class="form-control" required name="par_price" type="number" id="" placeholder="Enter Prats price">
   </div>
   <div class="form-group">
     <label for="name">Enter Product Stock:</label>

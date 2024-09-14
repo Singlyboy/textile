@@ -2,10 +2,10 @@
 
 
 @section('content')
-<div class="tab-content " style="margin-top:200px;">
+<div class="tab-content " style="margin-top:200px; ">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
-                            <div class="row g-4">
-                                <div class="col-lg-12">
+                            <div  class="row g-4">
+                                <div  class="col-lg-12">
                                     <div class="row g-4">
                                     @foreach ($parts as $par )
 
@@ -14,7 +14,7 @@
                                         <a href="{{route('show.parts',$par->id)}}">
                                             <div class="rounded position-relative fruite-item">
                                                 <div class="fruite-img">
-                                                    <img style="width:250px;" src="{{url('/upload/upload/'.$par->image)}}" class="img-fluid rounded-top" alt="">
+                                                    <img style="width:3000px;" src="{{url('/upload/upload/'.$par->image)}}" class="img-fluid rounded-top" alt="">
                                                 </div>
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{$par->category->name}}</div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">

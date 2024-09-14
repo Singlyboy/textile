@@ -1,6 +1,3 @@
-@extends('frontend.master')
-
-@section('content')
 
 
 <!DOCTYPE html>
@@ -139,4 +136,3 @@
 </html>
 
 
-@endsection

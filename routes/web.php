@@ -38,6 +38,7 @@ Route::post('/update-cart/{partsid}',[OrderController::class,'updateCart'])->nam
 Route::get('/clear-cart',[OrderController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/item/delete/{id}',[OrderController::class, 'cartItemDelete'])->name('cart.item.delete');
 Route::get('/search',[FrontendPartsController::class,'search'])->name('search');
+Route::get('/products-under-category/{category_id}',[FrontendHomeController::class,'productsUnderCategory'])->name('products.under.category');
 
 //authentication for user login for frontend
 Route::group(['middleware'=>'customer_auth'],function (){
@@ -84,29 +85,23 @@ Route::Group(['middleware'=>'auth'],function(){
     Route::get('/parts/edit/{p_id}',[PartsController::class, 'edit'])->name('parts.edit');
     Route::post('/parts/update/{p_id}',[PartsController::class, 'update'])->name('parts.update');
 
+    //stock alart
+    Route::post('/set-alert-stock',[PartsController::class,'setAlertStock'])->name('set.alert.stock');
+
     //category
     Route::get('/category',[CategoryController::class,'category'])->name('category.list');
     Route::get('/category-form',[CategoryController::class,'form'])->name('category.form');
     Route::post('/category-store',[CategoryController::class,'store'])->name('category.store');
 
-
-    Route::get('/machine',[MachineController::class,'machine'])->name('machine.list');
-    Route::get('/machine-form',[MachineController::class,'form'])->name('machine.form');
-    Route::post('/machine-store',[MachineController::class,'store'])->name('machine.store');
-
-   
+    //update and delate
+    Route::get('/category/delete/{c_id}',[CategoryController::class,'delete'])->name('category.delete');
+      Route::get('/category/edit/{c_id}',[CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/category/update/{c_id}',[CategoryController::class, 'update'])->name('category.update');
 //report
     Route::get('/report',[ReportController::class,'report'])->name('report.list');
    
 
-    Route::get('/stock',[StockController::class,'stock'])->name('stock.list');
-    Route::get('/stock-form',[StockController::class,'form'])->name('stock.form');
-    Route::post('/stock-store',[StockController::class,'store'])->name('stock.store');
-    Route::get('/business',[BusinessController::class,'business'])->name('business.list');
-   // Route::get('/business-form',[BusinessController::class,'form'])->name('business.form');
-    //Route::post('/business-store',[BusinessController::class,'store'])->name('business.store');
     Route::get('/admin',[AdminController::class,'admin'])->name('admin.list');
-    // Route::get('/create-form',[BusinessController::class,'create'])->name('admin.create');
-    //Route::post('/admin-role',[BusinessController::class,'role'])->name('admin.role');
+ 
 });
 });

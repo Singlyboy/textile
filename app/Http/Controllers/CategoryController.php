@@ -45,4 +45,48 @@ class CategoryController extends Controller
         return redirect()->back();
 
     }
+    public function delete($id)
+{
+
+    // category::find($id)->delete();
+    $allCategory=Category::find($id);//data entry
+    $allCategory->delete();//delete done
+
+    notify()->success('category Deleted successfully.');
+
+    return redirect()->back();
+
+    
+}
+public function edit($id)
+{
+
+    $allCategory=Category::find($id);
+   
+    return view('backend.page.category-edit',compact('allCategory'));
+}
+
+public function update(Request $request,$id)
+{
+    
+
+    //validation
+    $validation=Validator::make($request->all(),
+    [
+        'cat_name'=>'required|min:2',
+    ]);
+
+
+    //query
+    $allCategory=Category::find($id);
+    $allCategory->update([
+        'name'=>$request->cat_name,
+        'description'=>$request->cat_description
+    ]);
+  
+    notify()->success('category updated successfully.');
+    return redirect()->route('category.list');
+
+
+}
 }

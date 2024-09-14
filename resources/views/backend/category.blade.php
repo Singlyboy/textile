@@ -20,17 +20,17 @@
   </thead>
   <tbody>
 
-@foreach ($allCategory as $cat)
+@foreach ($allCategory as $key=>$cat)
  
 <tr>
-      <th scope="row">{{$cat->id}}</th>
+      <th scope="row">{{$key+1}}</th>
       <td>{{$cat->name}}</td>
       <td>{{$cat->description}}</td>
       <td>{{$cat->status}}</td>
       <td>
-        <a class="btn btn-success" href="">View</a>
-        <a class="btn btn-info" href="">Edit</a>
-        <a class="btn btn-danger" href="">Delete</a>
+        
+        <a class="btn btn-info" href="{{route('category.edit',$cat->id)}}">Edit</a>
+        <a class="btn btn-danger" href="{{route('category.delete',$cat->id)}}">Delete</a>
       </td>
     </tr>
 

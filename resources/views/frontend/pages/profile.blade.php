@@ -3,12 +3,12 @@
 @section('content')
 
 
-<div class="row gutters-sm">
-    <div class="col-md-4 mb-3">
+<div class="row gutters-sm"style="margin-top:200px;">
+    <div class="col-md-4 mb-3 ">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar5.png" style="width: 350px;" alt="Admin" class="rounded-circle" width="150">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" style="width: 250px;" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                         <h4>Name: {{auth('customerGuard')->user()->name}}</h4>
                         <p class="text-secondary mb-1">Email: {{auth('customerGuard')->user()->email}}</p>
@@ -24,7 +24,7 @@
     </div>
 <div class="col-md-8">
 <div class="row gutters-sm">
-                <div class="card h-100">
+                <div class="card h-80">
                     <div class="card-body">
 
                         <h1>My Orders ({{ $orders->count() }})</h1>

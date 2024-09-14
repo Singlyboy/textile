@@ -2,11 +2,26 @@
 
 @section('content')
 
-<h1>Parts List</h1>
-<!-- <button type="button" class="btn btn-primary">Primary</button> -->
-<a class="btn btn-primary" href="{{route('parts.form')}}">Create New Parts </a>
+<div class="row">
 
-<table class="table table-sm">
+  <div class="col-md-6">
+    <h1>Parts List</h1>
+    <a class="btn btn-success" href="{{route('parts.form')}}">Create new Parts</a>
+  </div>
+
+  <div class="col-md-6">
+    <form action="{{route('set.alert.stock')}}" method="post" >
+      @csrf
+
+      <input value="{{session()->get('alert')}}" name="alert_qty" type="text" class="form-control" placeholder="Enter Stock alert">
+      <button class="btn btn-success">Set</button>
+
+    </form>
+  </div>
+
+
+</div>
+<table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -20,14 +35,18 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($allParts as $parts)
+    @foreach($allParts as  $key=>$parts)
     <tr>
-      <th scope="row">{{$parts->id}}</th>
+    <th scope="row">{{$key+1}}</th>
       <td>{{$parts->name}}</td>
       <td>{{$parts->category->name}}</td>
       <td>{{$parts->description}}</td>
       <td>{{$parts->price}} BDT</td>
+      @if(session()->has('alert') and  (int) session()->get('alert') < $parts->stock)
       <td>{{$parts->stock}}</td>
+      @else
+      <td style="background: red;">{{$parts->stock}}</td>
+      @endif
       
       <td>
         <img src="{{url('/upload/upload/')}}" alt="">

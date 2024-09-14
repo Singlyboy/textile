@@ -22,9 +22,9 @@ class CustomerController extends Controller
        //step1 validation
         $validation=Validator::make($request->all(),[
             'customer_name'=>'required',
-            'email'=>'required|email',
+            'email'=>'required||email:rfc,dns',
             'password'=>'required|min:6|confirmed',
-            'mobile_number'=>'required|min:11|max:11'
+            'mobile_number'=>'required|digits:11|numeric'
             
         ]);
 
