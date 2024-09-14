@@ -6,11 +6,7 @@
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
                     </div>
-                    <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-                    </div>
+                  
                 </div>
             </div>
             <div class="container px-0">
@@ -29,7 +25,7 @@
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($categories as $cat)
 
-                                    <a href="cart.html" class="dropdown-item">{{$cat->name}}</a>
+                                    <a href="{{route('parts.under.category',$cat->id)}}" class="dropdown-item">{{$cat->name}}</a>
                                     @endforeach
                                    
                                 </div>

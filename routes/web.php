@@ -38,7 +38,7 @@ Route::post('/update-cart/{partsid}',[OrderController::class,'updateCart'])->nam
 Route::get('/clear-cart',[OrderController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/item/delete/{id}',[OrderController::class, 'cartItemDelete'])->name('cart.item.delete');
 Route::get('/search',[FrontendPartsController::class,'search'])->name('search');
-Route::get('/products-under-category/{category_id}',[FrontendHomeController::class,'productsUnderCategory'])->name('products.under.category');
+Route::get('/parts-under-category/{category_id}',[FrontendHomeController::class,'partsUnderCategory'])->name('parts.under.category');
 
 //authentication for user login for frontend
 Route::group(['middleware'=>'customer_auth'],function (){
