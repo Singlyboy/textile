@@ -29,6 +29,7 @@
       <th scope="col">Category Name</th>
       <th scope="col">Descption</th>
       <th scope="col">Price</th>
+      <th scope="col">Discount</th>
       <th scope="col">Stock</th>
       <th scope="col">Image</th>
       <th scope="col">Action</th>
@@ -42,6 +43,7 @@
       <td>{{$parts->category->name}}</td>
       <td>{{$parts->description}}</td>
       <td>{{$parts->price}} BDT</td>
+      <td>{{$parts->discount}}%</td> 
       @if(session()->has('alert') and  (int) session()->get('alert') < $parts->stock)
       <td>{{$parts->stock}}</td>
       @else

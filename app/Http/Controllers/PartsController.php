@@ -27,10 +27,11 @@ public function store(Request $request)
     [
        
         'par_name'=>'required|unique:parts,name',
-        'par_price'=>'required|numeric',
+        'par_price'=>'required|numeric|min:1',
          'par_image'=>'required',
         'category_id'=>'required',
-        'par_stock'=>'required|numeric'
+        'par_stock'=>'required|numeric|min:1',
+        'par_discount'=>'nullable|numeric|min:1'
     ]);
 
     if($validation->fails())
@@ -51,6 +52,7 @@ public function store(Request $request)
         'name'=>$request->par_name,
         'description'=>$request->par_description,
         'price'=>$request->par_price,
+        'discount'=>$request->par_discount,
         'stock'=>$request->par_stock,
         'image'=>$image,
         'category_id'=>$request->category_id
@@ -91,9 +93,14 @@ public function viewParts($id)
         //validation
         $validation=Validator::make($request->all(),
         [
-            'par_name'=>'required|min:2',
-            'par_image'=>'required',
-            'category_id'=>'required'
+           
+
+        'par_name'=>'required|unique:parts,name',
+        'par_price'=>'required|numeric|min:1',
+        'par_image'=>'required',
+        'category_id'=>'required',
+        'par_stock'=>'required|numeric|min:1',
+        'par_discount'=>'nullable|numeric|min:1'
             
         ]);
 
@@ -104,6 +111,7 @@ public function viewParts($id)
             'name'=>$request->par_name,
             'price'=>$request->par_price,
             'stock'=>$request->par_stock,
+            'discount'=>$request->par_discount,
         ]);
       
         notify()->success('Parts updated successfully.');

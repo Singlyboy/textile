@@ -17,79 +17,77 @@ use Throwable;
 class OrderController extends Controller
 {
    
-
-   public function addToCart($pId)
-   {
-    $parts=Part::find($pId);
-    if($parts->stock > 0)
+    public function addToCart($pId)
     {
+        $parts = Part::find($pId);
     
-    $myCart=session()->get('basket');
-
-     //step 1: cart empty
-     if(empty($myCart))
-     {
-         //action: add to cart
-         $cart[$parts->id]=[
-             //key=>value
-             'parts_id'=>$parts->id,
-             'parts_name'=>$parts->name,
-             'price'=>$parts->price,
-             'quantity'=>1,
-             'subtotal'=>1 * $parts->price,
-             'image'=>$parts->image
-         ];
-
-         session()->put('basket',$cart);
-
-         notify()->success('parts added to cart.');
-         return redirect()->back();
-   }
-   else{
-
-      if(array_key_exists($pId,$myCart))
-         {// dd($myCart[$pId]);
-                //step 2: quantity update, subtotal update
-               //q=1,sub=50
-               if($parts->stock > $myCart[$pId]['quantity'])
-               {
-               $myCart[$pId]['quantity'] = $myCart[$pId]['quantity'] + 1;
-               $myCart[$pId]['subtotal'] = $myCart[$pId]['quantity'] * $myCart[$pId]['price'];
-
-               session()->put('basket',$myCart);
-
-               notify()->success('Quantity updated.');
-               return redirect()->back();
-            }else{
-                notify()->error('Quantity not available.');
+        // Check if the part is in stock
+        if ($parts->stock > 0) {
+            $myCart = session()->get('basket');
+    
+            // Check if the part has a discount
+            if ($parts->discount > 0) {
+                // Calculate discounted price
+                $discountedPrice = $parts->price - ($parts->price * $parts->discount / 100);
+            } else {
+                // Use original price if no discount
+                $discountedPrice = $parts->price;
+            }
+    
+            // Step 1: If cart is empty
+            if (empty($myCart)) {
+                // Action: Add to cart
+                $cart[$parts->id] = [
+                    'parts_id' => $parts->id,
+                    'parts_name' => $parts->name,
+                    'price' => $discountedPrice, // Use discounted price
+                    'quantity' => 1,
+                    'subtotal' => 1 * $discountedPrice, // Calculate subtotal with discounted price
+                    'image' => $parts->image,
+                ];
+    
+                session()->put('basket', $cart);
+    
+                notify()->success('Part added to cart.');
                 return redirect()->back();
-               }
-
-         }
-         else{
-        //step 3: add to cart
-        $myCart[$parts->id]=[
-            'parts_id'=>$parts->id,
-            'parts_name'=>$parts->name,
-            'price'=>$parts->price,
-            'quantity'=>1,
-            'subtotal'=>1 * $parts->price,
-            'image'=>$parts->image
-            
-        ];
-
-        
-        session()->put('basket',$myCart);
-        notify()->success("parts Added to Cart");
-        return redirect()->back();
+            } else {
+                // Step 2: If part already exists in cart, update quantity and subtotal
+                if (array_key_exists($pId, $myCart)) {
+                    if ($parts->stock > $myCart[$pId]['quantity']) {
+                        // Increase quantity and update subtotal
+                        $myCart[$pId]['quantity'] = $myCart[$pId]['quantity'] + 1;
+                        $myCart[$pId]['subtotal'] = $myCart[$pId]['quantity'] * $myCart[$pId]['price'];
+    
+                        session()->put('basket', $myCart);
+    
+                        notify()->success('Quantity updated.');
+                        return redirect()->back();
+                    } else {
+                        notify()->error('Quantity not available.');
+                        return redirect()->back();
+                    }
+                } else {
+                    // Step 3: Add new part to cart
+                    $myCart[$parts->id] = [
+                        'parts_id' => $parts->id,
+                        'parts_name' => $parts->name,
+                        'price' => $discountedPrice, // Use discounted price
+                        'quantity' => 1,
+                        'subtotal' => 1 * $discountedPrice, // Calculate subtotal with discounted price
+                        'image' => $parts->image,
+                    ];
+    
+                    session()->put('basket', $myCart);
+                    notify()->success('Part added to cart.');
+                    return redirect()->back();
+                }
+            }
+        } else {
+            notify()->error('This part is out of stock.');
+            return redirect()->back();
+        }
     }
-
-    }
-    }else{
-        notify()->error('Stock not available.');
-        return redirect()->back();
-    }
-}
+    
     public function viewCart()
     {
 

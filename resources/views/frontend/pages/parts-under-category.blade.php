@@ -2,8 +2,11 @@
 
 
 @section('content')
+
 <div class="tab-content " style="margin-top:200px; ">
+                        <h1>Parts Under Categorys</h1>
                         <div id="tab-1" class="tab-pane fade show p-0 active">
+                           
                             <div  class="row g-4">
                                 <div  class="col-lg-12">
                                     <div class="row g-4">

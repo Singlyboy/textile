@@ -55,7 +55,7 @@
                                 @endif
                             </a>
                             <a href="#" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
+                                <i class="fas fa-heart fa-2x"></i>
                             </a>
                         </div>
                     </div>
