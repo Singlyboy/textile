@@ -41,5 +41,5 @@
   </tbody>
 </table>
 
-
+{{ $allOrders->links() }}
 @endsection

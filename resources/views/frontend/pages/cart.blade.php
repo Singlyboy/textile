@@ -2,11 +2,14 @@
 
 
 @section('content')
+
+
 <div class="container-fluid py-5 " style="margin-top:200px;">
             <div class="container py-5">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
+                        @if(count($myCart) > 0)
                           <tr>
                             <th scope="col">Image</th>
                             <th scope="col">Name</th>
@@ -80,6 +83,11 @@
                             <a href="{{route('checkout')}}" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Proceed Checkout</a>
                         </div>
                     </div>
+                    @else
+    <div style="text-align:center;">
+        <p style="color:red;">You cart is empty</p>
+        </div>
+        @endif
                 </div>
             </div>
         </div>

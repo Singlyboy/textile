@@ -21,7 +21,7 @@ public function dologin(Request $request)
     
     if($check)
     {
-        notify()->success('Laravel Notify is awesome!');
+        notify()->success('Welcome to Loging Page!');
         return redirect()->route('dashboard');
 
     }else{

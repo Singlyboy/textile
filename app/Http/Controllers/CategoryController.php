@@ -50,6 +50,7 @@ class CategoryController extends Controller
 
     // category::find($id)->delete();
     $allCategory=Category::find($id);//data entry
+    $allCategory->parts()->delete();
     $allCategory->delete();//delete done
 
     notify()->success('category Deleted successfully.');

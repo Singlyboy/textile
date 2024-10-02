@@ -10,8 +10,9 @@ class HomeController extends Controller
 {
     public function home()
     {
-      
-        return view("frontend.home");    
+        $parts=Part::all();
+        $categoryParts = Part::where('category_id')->get();
+        return view("frontend.home",compact('parts','categoryParts'));    
     }
 
     public function new(){

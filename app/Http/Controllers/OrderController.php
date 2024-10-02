@@ -21,11 +21,11 @@ class OrderController extends Controller
     {
         $parts = Part::find($pId);
     
-        // Check if the part is in stock
+        // Check if the parts is in stock
         if ($parts->stock > 0) {
             $myCart = session()->get('basket');
     
-            // Check if the part has a discount
+            // Check if the parts has a discount
             if ($parts->discount > 0) {
                 // Calculate discounted price
                 $discountedPrice = $parts->price - ($parts->price * $parts->discount / 100);
@@ -197,6 +197,12 @@ class OrderController extends Controller
     
                 $payment->payNow($order); 
                 
+            }if ($request->paymentMethod == 'cod')
+            {
+
+                notify()->success('Order place seccessfully');
+                session()->forget('basket');
+                return redirect()->route('home');
             }
                             
                 }catch(Throwable $exception){
@@ -219,10 +225,11 @@ class OrderController extends Controller
             $order=Order::with('orderDetails')->find($id);
             return view('frontend.pages.invoice',compact('order'));
         }
-        public function order(){
-            $allOrders = Order::with('customer')->get();
-            return view ('backend.order',compact('allOrders'));
-    }
+        public function order() {
+            $allOrders = Order::with('customer')->orderBy('created_at', 'desc')->paginate(10); 
+            return view('backend.order', compact('allOrders'));
+        }
+        
     public function orderView($id)
     {
 
