@@ -36,8 +36,8 @@
     <input class="form-control"  name="par_discount" type="number" min="1" id="" placeholder="Enter Prats Discount">
   </div>
   <div class="form-group">
-    <label for="name">Enter Product Stock:</label>
-    <input required name="par_stock" type="number" min="1" class="form-control" id="" placeholder="Enter product stock">
+    <label for="name">Enter parts Stock:</label>
+    <input required name="par_stock" type="number" min="1" class="form-control" id="" placeholder="Enter parts stock">
   </div>
   <div class="form-group">
     <label for="name">Parts Image</label>

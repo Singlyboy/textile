@@ -26,8 +26,7 @@
       <td>{{$customer->mobile}}</td>
            <td>
         <a class="btn btn-primary" href="#">View</a>
-        <a class="btn btn-danger" href="#">Delete</a>
-        <a class="btn btn-info" href="#">Edit</a>
+       
       </td>
     </tr>
     @endforeach
